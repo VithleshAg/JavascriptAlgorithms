@@ -1,31 +1,30 @@
 import "./styles.css";
-// import ChildComp from "./ChildComp";
-// import { useState } from "react";
 
 export default function App() {
-  // Big O - O(n)
+  // Binary search is done for sorted array
+  //Big O - O(log n)
 
-  const findNumberByBinarySearch = (arr, n) => {
-    let l = arr.length;
-    let m = parseInt((l + 1) / 2) - 1;
+  const findNumberByRecursiveBinarySearch = (arr, n) => {
+    return search(arr, n, 0, arr.length - 1);
+  };
 
-    if (arr[m] > n)
-      return findNumberByBinarySearch(arr.slice(0, m), n) === -1
-        ? -1
-        : findNumberByBinarySearch(arr.slice(0, m), n);
+  const search = (arr, n, li, ri) => {
+    let m = parseInt((li + ri) / 2);
+
+    if (li > ri) return -1;
     else if (arr[m] === n) return m;
-    else if (arr[m] < n)
-      return findNumberByBinarySearch(arr.slice(m + 1), n) === -1
-        ? -1
-        : m + 1 + findNumberByBinarySearch(arr.slice(m + 1), n);
-    else return -1;
+    else if (arr[m] > n) return search(arr, n, li, m - 1);
+    else if (arr[m] < n) return search(arr, n, m + 1, ri);
   };
 
   return (
     <div className="App">
       <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2>
-      {findNumberByBinarySearch([-3, -1, 0, 1, 2, 3, 4, 5, 9, 11, 16], 1)}
+      {findNumberByRecursiveBinarySearch(
+        [-3, -1, 0, 1, 2, 3, 4, 5, 9, 11, 16],
+        29
+      )}
     </div>
   );
 }
